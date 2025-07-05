@@ -387,6 +387,49 @@ impl Default for PeerConfig {
     }
 }
 
+/// Initialize DEFAULT_SETTINGS with values from UserDefaultConfig
+pub fn init_default_settings() {
+    let user_config = UserDefaultConfig::load();
+    
+    // Initialize DEFAULT_SETTINGS with default values from UserDefaultConfig
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_ALLOW_REMOTE_CONFIG_MODIFICATION.to_string(),
+        user_config.get_string(OPTION_ALLOW_REMOTE_CONFIG_MODIFICATION)
+    );
+    
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_ALLOW_NUMERNIC_ONE_TIME_PASSWORD.to_string(),
+        user_config.get_string(OPTION_ALLOW_NUMERNIC_ONE_TIME_PASSWORD)
+    );
+    
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_CODEC_PREFERENCE.to_string(),
+        user_config.get_string(OPTION_CODEC_PREFERENCE)
+    );
+    
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_CUSTOM_IMAGE_QUALITY.to_string(),
+        user_config.get_string(OPTION_CUSTOM_IMAGE_QUALITY)
+    );
+    
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_CUSTOM_FPS.to_string(),
+        user_config.get_string(OPTION_CUSTOM_FPS)
+    );
+    
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_ENABLE_FILE_COPY_PASTE.to_string(),
+        user_config.get_string(OPTION_ENABLE_FILE_COPY_PASTE)
+    );
+    
+    DEFAULT_SETTINGS.write().unwrap().insert(
+        OPTION_TRACKPAD_SPEED.to_string(),
+        user_config.get_string(OPTION_TRACKPAD_SPEED)
+    );
+}
+
+
+
 #[derive(Debug, PartialEq, Default, Serialize, Deserialize, Clone)]
 pub struct PeerInfoSerde {
     #[serde(default, deserialize_with = "deserialize_string")]
@@ -1934,8 +1977,6 @@ impl UserDefaultConfig {
             keys::OPTION_CUSTOM_FPS => self.get_num_string(key, 30.0, 5.0, 120.0),
             keys::OPTION_ENABLE_FILE_COPY_PASTE => self.get_string(key, "Y", vec!["", "N"]),
             keys::OPTION_TRACKPAD_SPEED => self.get_num_string(key, 100, 10, 1000),
-            keys::OPTION_ALLOW_REMOTE_CONFIG_MODIFICATION => self.get_string(key, "Y", vec!["", "N"]),
-            keys::OPTION_ALLOW_NUMERNIC_ONE_TIME_PASSWORD => self.get_string(key, "Y", vec!["", "N"]),
             _ => self
                 .get_after(key)
                 .map(|v| v.to_string())
