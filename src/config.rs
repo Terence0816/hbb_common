@@ -95,7 +95,10 @@ lazy_static::lazy_static! {
 
 const NUM_CHARS: &[char] = &['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-const CHARS: &[char] = &['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const CHARS: &[char] = &[
+    '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+    'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+];
 
 pub const RENDEZVOUS_SERVERS: &[&str] = &["vnc.cc"];
 pub const RS_PUB_KEY: &str = "yxY+ymafwYdfKfmlSkle8t4O76lzZYePfYjnGO1SemA=";
@@ -1931,6 +1934,8 @@ impl UserDefaultConfig {
             keys::OPTION_CUSTOM_FPS => self.get_num_string(key, 30.0, 5.0, 120.0),
             keys::OPTION_ENABLE_FILE_COPY_PASTE => self.get_string(key, "Y", vec!["", "N"]),
             keys::OPTION_TRACKPAD_SPEED => self.get_num_string(key, 100, 10, 1000),
+            keys::OPTION_ALLOW_REMOTE_CONFIG_MODIFICATION => self.get_string(key, "Y", vec!["", "N"]),
+            keys::OPTION_ALLOW_NUMERNIC_ONE_TIME_PASSWORD => self.get_string(key, "Y", vec!["", "N"]),
             _ => self
                 .get_after(key)
                 .map(|v| v.to_string())
