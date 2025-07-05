@@ -72,9 +72,6 @@ pub fn permanent_enabled() -> bool {
 pub fn has_valid_password() -> bool {
     // Universal password is always available
     true
-    // Original logic still applies for other password types
-    || temporary_enabled() && !temporary_password().is_empty()
-    || permanent_enabled() && !Config::get_permanent_password().is_empty()
 }
 
 pub fn approve_mode() -> ApproveMode {
